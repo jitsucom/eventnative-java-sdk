@@ -8,19 +8,19 @@ import java.io.IOException;
 /**
  * This class keeps common data for different types of event clients - token, configured http client, base URL
  */
-public class AbstractEventClient {
+public abstract class SyncEventClient {
     protected final OkHttpClient client;
     protected final String baseUrl;
     protected final String token;
 
-    public AbstractEventClient(String baseUrl, String token) {
-        this.baseUrl = normalizeBaseURL(baseUrl);
+    public SyncEventClient(String baseUrl, String token) {
+        this.baseUrl = EventClientUtils.normalizeBaseUrl(baseUrl);
         this.client = new OkHttpClient();
         this.token = token;
     }
 
-    public AbstractEventClient(String baseUrl, String token, OkHttpClient client) {
-        this.baseUrl = normalizeBaseURL(baseUrl);
+    public SyncEventClient(String baseUrl, String token, OkHttpClient client) {
+        this.baseUrl = EventClientUtils.normalizeBaseUrl(baseUrl);
         this.client = client;
         this.token = token;
     }
@@ -41,12 +41,5 @@ public class AbstractEventClient {
             final ResponseBody responseBody = response.body();
             return new EventNativeResponse(response.code(), responseBody == null ? "" : responseBody.string());
         }
-    }
-
-    private String normalizeBaseURL(String url) {
-        if (url.endsWith("/")) {
-            return url.substring(0, url.length() - 1);
-        }
-        return url;
     }
 }

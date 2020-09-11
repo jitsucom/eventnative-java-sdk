@@ -11,7 +11,7 @@ import java.io.IOException;
 /**
  * This client is used to send s2s events synchronously.
  */
-public class S2SEventClient extends AbstractEventClient {
+public class S2SSyncEventClient extends SyncEventClient {
     public static final String S2S_EVENT_URL = "/api/v1/s2s/event?token=";
 
     /**
@@ -20,7 +20,7 @@ public class S2SEventClient extends AbstractEventClient {
      * @param baseUrl URL of the eventnative backend
      * @param S2SToken s2s token (configured as s2s_auth at eventnative configuration file)
      */
-    public S2SEventClient(String baseUrl, String S2SToken) {
+    public S2SSyncEventClient(String baseUrl, String S2SToken) {
         super(baseUrl, S2SToken);
     }
 
@@ -31,7 +31,7 @@ public class S2SEventClient extends AbstractEventClient {
      * @param S2SToken s2s token (configured as s2s_auth at eventnative configuration file)
      * @param client preconfigured {@link OkHttpClient}
      */
-    public S2SEventClient(String baseUrl, String S2SToken, OkHttpClient client) {
+    public S2SSyncEventClient(String baseUrl, String S2SToken, OkHttpClient client) {
         super(baseUrl, S2SToken, client);
     }
 

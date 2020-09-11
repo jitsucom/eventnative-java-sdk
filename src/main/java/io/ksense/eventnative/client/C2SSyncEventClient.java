@@ -11,7 +11,7 @@ import java.io.IOException;
 /**
  * This client is used to send client events (with 'eventn_ctx' node) synchronously.
  */
-public class C2SEventClient extends AbstractEventClient {
+public class C2SSyncEventClient extends SyncEventClient {
     public static final String C2S_EVENT_URL = "/api/v1/event?token=";
 
     /**
@@ -20,7 +20,7 @@ public class C2SEventClient extends AbstractEventClient {
      * @param baseUrl URL of the eventnative backend
      * @param C2SToken client token
      */
-    public C2SEventClient(String baseUrl, String C2SToken) {
+    public C2SSyncEventClient(String baseUrl, String C2SToken) {
         super(baseUrl, C2SToken);
     }
 
@@ -31,7 +31,7 @@ public class C2SEventClient extends AbstractEventClient {
      * @param C2SToken client token
      * @param client preconfigured {@link OkHttpClient}
      */
-    public C2SEventClient(String baseUrl, String C2SToken, OkHttpClient client) {
+    public C2SSyncEventClient(String baseUrl, String C2SToken, OkHttpClient client) {
         super(baseUrl, C2SToken, client);
     }
 
