@@ -42,7 +42,7 @@ public class S2SSyncEventClient extends SyncEventClient {
      * @throws IOException in case of network problems or timeout
      */
     public EventNativeResponse sendEvent(JsonObject jsonObject) throws IOException {
-        var body = RequestBody.create(jsonObject.toString(), MediaType.get("application/json; charset=utf-8"));
+        RequestBody body = RequestBody.create(jsonObject.toString(), MediaType.get("application/json; charset=utf-8"));
         return sendRequest(baseUrl + S2S_EVENT_URL + token, body);
     }
 }

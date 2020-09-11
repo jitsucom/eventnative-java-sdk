@@ -45,7 +45,7 @@ public class C2SSyncEventClient extends SyncEventClient {
      */
     public EventNativeResponse sendEvent(JsonObject eventContext, JsonObject properties) throws IOException {
         properties.add("eventn_ctx", eventContext);
-        var body = RequestBody.create(properties.toString(), MediaType.get("application/json; charset=utf-8"));
+        RequestBody body = RequestBody.create(properties.toString(), MediaType.get("application/json; charset=utf-8"));
         final String postEventUrl = baseUrl + C2S_EVENT_URL + token;
         return sendRequest(postEventUrl, body);
     }

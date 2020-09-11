@@ -46,8 +46,8 @@ public abstract class AsyncEventClient implements AutoCloseable {
         executorService.execute(() -> {
             while (true) {
                 try {
-                    var event = eventsQueue.take();
-                    var body = RequestBody.create(event.toString(), MediaType.get("application/json; charset=utf-8"));
+                    JsonObject event = eventsQueue.take();
+                    RequestBody body = RequestBody.create(event.toString(), MediaType.get("application/json; charset=utf-8"));
                     logger.debug("Sending {} event to [{}]", event, postEventUrl);
                     final EventNativeResponse eventNativeResponse = sendRequest(postEventUrl, body);
                     logger.debug("Eventnative server response: {}", eventNativeResponse);
@@ -70,7 +70,7 @@ public abstract class AsyncEventClient implements AutoCloseable {
     }
 
     protected EventNativeResponse sendRequest(String postEventUrl, RequestBody body) throws IOException {
-        var request = new Request.Builder()
+        Request request = new Request.Builder()
                 .url(postEventUrl)
                 .post(body)
                 .build();

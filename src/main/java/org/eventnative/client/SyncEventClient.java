@@ -33,7 +33,7 @@ public abstract class SyncEventClient {
      * @throws IOException in case of network problems or timeout
      */
     protected EventNativeResponse sendRequest(String postEventUrl, RequestBody body) throws IOException {
-        var request = new Request.Builder()
+        Request request = new Request.Builder()
                 .url(postEventUrl)
                 .post(body)
                 .build();

@@ -32,11 +32,7 @@ public class Demo {
     }
 
     private static void demoS2S() throws IOException {
-        var s2sEvent = """
-                        {
-                            "event_type": "test_event"
-                        }
-                """;
+        String s2sEvent = "{\"event_type\": \"test_event\" }";
         JsonObject json = JsonParser.parseString(s2sEvent).getAsJsonObject();
         final S2SSyncEventClient client = new S2SSyncEventClient(EVENTNATIVE_BASE_URL, S2S_TOKEN);
         final EventNativeResponse eventNativeResponse = client.sendEvent(json);
@@ -45,17 +41,11 @@ public class Demo {
     }
 
     private static void demoC2S() throws IOException {
-        var event = """
-                        {
-                            "event_type": "test_event"
-                        }
-                """;
-        var json = JsonParser.parseString(event).getAsJsonObject();
+        String event = "{\"event_type\": \"test_event\"}";
+        JsonObject json = JsonParser.parseString(event).getAsJsonObject();
         final C2SSyncEventClient client = new C2SSyncEventClient(EVENTNATIVE_BASE_URL, C2S_TOKEN);
 
-        final JsonObject userJson = JsonParser.parseString("""
-                {"anonymous_id": "randomValue"}""").getAsJsonObject();
-
+        final JsonObject userJson = JsonParser.parseString("{\"anonymous_id\": \"randomValue\"}").getAsJsonObject();
         final UserEvent userEvent = new UserEvent("231", userJson);
 
         Gson gson = new GsonBuilder()
