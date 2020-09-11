@@ -1,8 +1,8 @@
-package io.ksense.eventnative.client;
+package org.eventnative.client;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.google.gson.JsonObject;
-import io.ksense.eventnative.model.EventNativeResponse;
+import org.eventnative.model.EventNativeResponse;
 import okhttp3.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

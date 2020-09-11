@@ -1,4 +1,4 @@
-package io.ksense.eventnative.model;
+package org.eventnative.model;
 
 public class EventNativeResponse {
     private final int status;

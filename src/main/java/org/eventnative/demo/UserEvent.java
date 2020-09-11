@@ -1,4 +1,4 @@
-package io.ksense.eventnative.demo;
+package org.eventnative.demo;
 
 import com.google.gson.JsonObject;
 

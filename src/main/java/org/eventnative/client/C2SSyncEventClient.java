@@ -1,7 +1,7 @@
-package io.ksense.eventnative.client;
+package org.eventnative.client;
 
 import com.google.gson.JsonObject;
-import io.ksense.eventnative.model.EventNativeResponse;
+import org.eventnative.model.EventNativeResponse;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;

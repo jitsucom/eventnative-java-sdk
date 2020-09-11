@@ -1,6 +1,6 @@
-package io.ksense.eventnative.client;
+package org.eventnative.client;
 
-import io.ksense.eventnative.model.EventNativeResponse;
+import org.eventnative.model.EventNativeResponse;
 import okhttp3.*;
 
 import java.io.IOException;

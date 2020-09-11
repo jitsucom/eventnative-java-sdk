@@ -1,4 +1,4 @@
-package io.ksense.eventnative.client;
+package org.eventnative.client;
 
 import com.google.gson.JsonObject;
 import okhttp3.OkHttpClient;

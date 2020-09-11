@@ -1,4 +1,4 @@
-package io.ksense.eventnative.client;
+package org.eventnative.client;
 
 public class EventClientUtils {
 

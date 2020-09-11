@@ -1,11 +1,11 @@
-package io.ksense.eventnative.demo;
+package org.eventnative.demo;
 
 import com.google.gson.*;
-import io.ksense.eventnative.client.C2SAsyncClient;
-import io.ksense.eventnative.client.S2SAsyncEventClient;
-import io.ksense.eventnative.model.EventNativeResponse;
-import io.ksense.eventnative.client.C2SSyncEventClient;
-import io.ksense.eventnative.client.S2SSyncEventClient;
+import org.eventnative.client.C2SAsyncClient;
+import org.eventnative.client.S2SAsyncEventClient;
+import org.eventnative.model.EventNativeResponse;
+import org.eventnative.client.C2SSyncEventClient;
+import org.eventnative.client.S2SSyncEventClient;
 
 import java.io.IOException;
 import java.util.concurrent.ThreadLocalRandom;
