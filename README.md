@@ -75,11 +75,11 @@ We have an implementation of two async clients:
 Example of S2SAsyncEventClient:
 ```java
 try (S2SAsyncEventClient eventsClient = new S2SAsyncEventClient(EVENTNATIVE_BASE_URL, S2S_TOKEN, 10)) {
-JsonObject event = JsonParser.parseString("{\"event_type\": \"s2s_async_test\"}").getAsJsonObject();
-final boolean addedToQueue = eventsClient.sendEvent(event);
-if (!addedToQueue) {
-// process the situation when queue is full
-}
+    JsonObject event = JsonParser.parseString("{\"event_type\": \"s2s_async_test\"}").getAsJsonObject();
+    final boolean addedToQueue = eventsClient.sendEvent(event);
+    if (!addedToQueue) {
+    // process the situation when queue is full
+    }
 }
 ```
 
@@ -103,8 +103,8 @@ JsonObject json = JsonParser.parseString(s2sEvent).getAsJsonObject();
 final S2SSyncEventClient client = new S2SSyncEventClient(EVENTNATIVE_BASE_URL, S2S_TOKEN);
 final EventNativeResponse eventNativeResponse = client.sendEvent(json);
 if (!eventNativeResponse.isSuccessful()) {
-System.out.println("status: " + eventNativeResponse.getStatus());
-System.out.println("response body: " + eventNativeResponse.getBody());
+    System.out.println("status: " + eventNativeResponse.getStatus());
+    System.out.println("response body: " + eventNativeResponse.getBody());
 }
 ```
 
