@@ -1,4 +1,4 @@
-package org.eventnative.client;
+package org.eventnative.client.async;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.google.gson.JsonObject;
@@ -8,6 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -60,6 +62,10 @@ public abstract class AsyncEventClient implements AutoCloseable {
 
     protected boolean addEvent(JsonObject event) {
         return eventsQueue.offer(event);
+    }
+
+    public Collection<JsonObject> unprocessedEvents() {
+        return new ArrayList<>(eventsQueue);
     }
 
     private String normalizeBaseURL(String url) {

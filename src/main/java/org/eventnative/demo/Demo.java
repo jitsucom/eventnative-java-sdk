@@ -2,11 +2,11 @@ package org.eventnative.demo;
 
 import com.google.gson.*;
 import org.apache.log4j.BasicConfigurator;
-import org.eventnative.client.C2SAsyncClient;
-import org.eventnative.client.S2SAsyncEventClient;
+import org.eventnative.client.async.C2SAsyncClient;
+import org.eventnative.client.async.S2SAsyncEventClient;
 import org.eventnative.model.EventNativeResponse;
-import org.eventnative.client.C2SSyncEventClient;
-import org.eventnative.client.S2SSyncEventClient;
+import org.eventnative.client.sync.C2SSyncEventClient;
+import org.eventnative.client.sync.S2SSyncEventClient;
 
 import java.io.IOException;
 import java.util.concurrent.ThreadLocalRandom;

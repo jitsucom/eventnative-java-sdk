@@ -1,4 +1,4 @@
-package org.eventnative.client;
+package org.eventnative.client.sync;
 
 import com.google.gson.JsonObject;
 import org.eventnative.model.EventNativeResponse;

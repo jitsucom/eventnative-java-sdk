@@ -1,4 +1,4 @@
-package org.eventnative.client;
+package org.eventnative.client.async;
 
 import com.google.gson.JsonObject;
 import okhttp3.OkHttpClient;

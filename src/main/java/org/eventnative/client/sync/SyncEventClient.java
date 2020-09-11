@@ -1,5 +1,6 @@
-package org.eventnative.client;
+package org.eventnative.client.sync;
 
+import org.eventnative.client.EventClientUtils;
 import org.eventnative.model.EventNativeResponse;
 import okhttp3.*;
 
