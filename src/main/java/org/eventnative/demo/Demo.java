@@ -1,6 +1,7 @@
 package org.eventnative.demo;
 
 import com.google.gson.*;
+import org.apache.log4j.BasicConfigurator;
 import org.eventnative.client.C2SAsyncClient;
 import org.eventnative.client.S2SAsyncEventClient;
 import org.eventnative.model.EventNativeResponse;
@@ -20,6 +21,8 @@ public class Demo {
     public static final String S2S_TOKEN = "<S2S_AUTH>";
 
     public static void main(String[] args) throws IOException, InterruptedException {
+        // demo logs are written to console
+        BasicConfigurator.configure();
         // uncomment the demo you want to run
 
         demoS2S();
