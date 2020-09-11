@@ -1,10 +1,12 @@
 package org.eventnative.client.sync;
 
 import com.google.gson.JsonObject;
-import org.eventnative.model.EventNativeResponse;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
+import org.eventnative.model.EventNativeResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
@@ -12,7 +14,8 @@ import java.io.IOException;
  * This client is used to send s2s events synchronously.
  */
 public class S2SSyncEventClient extends SyncEventClient {
-    public static final String S2S_EVENT_URL = "/api/v1/s2s/event?token=";
+    private static final String S2S_EVENT_URL = "/api/v1/s2s/event?token=";
+    private final Logger logger = LoggerFactory.getLogger(S2SSyncEventClient.class);
 
     /**
      * Use this constructor if you want to create client with default connection parameters
@@ -37,12 +40,16 @@ public class S2SSyncEventClient extends SyncEventClient {
 
     /**
      *
-     * @param jsonObject - any json object
+     * @param event any JSON object
      * @return {@link EventNativeResponse} with http response status and body
      * @throws IOException in case of network problems or timeout
      */
-    public EventNativeResponse sendEvent(JsonObject jsonObject) throws IOException {
-        RequestBody body = RequestBody.create(jsonObject.toString(), MediaType.get("application/json; charset=utf-8"));
+    public EventNativeResponse sendEvent(JsonObject event) throws IOException {
+        if (event == null) {
+            throw new IllegalArgumentException("event must be a valid JSON object");
+        }
+        logger.debug("Sending event [{}]", event);
+        RequestBody body = RequestBody.create(event.toString(), MediaType.get("application/json; charset=utf-8"));
         return sendRequest(baseUrl + S2S_EVENT_URL + token, body);
     }
 }

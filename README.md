@@ -12,22 +12,22 @@ C2S is a JSON object with a mandatory _event_ctx_ node, which is a JSON object.
 For example:
 ```json
 {
-"event_type": "3rdparty", 
-"eventn_ctx": {
-"event_id": "dq4s1q6rrg",
-"user": {
-"anonymous_id": "afdklmflv"
-},
-"user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36",
-"utc_time": "2020-08-03T14:35:58.638Z",
-"local_tz_offset": 240,
-"referer": "",
-"url": "http://localhost:63342/tracker-demo/demo.html?_ijt=u5jsi606103iugi7mjphngrc7i",
-"page_title": "kSenseTrackingDemo"
-},
-"eventn_data": {
-"customer_group": "test_group"
-}
+    "event_type": "3rdparty", 
+    "eventn_ctx": {
+      "event_id": "dq4s1q6rrg",
+      "user": {
+        "anonymous_id": "afdklmflv"
+      },
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36",
+      "utc_time": "2020-08-03T14:35:58.638Z",
+      "local_tz_offset": 240,
+      "referer": "",
+      "url": "http://localhost:63342/tracker-demo/demo.html?_ijt=u5jsi606103iugi7mjphngrc7i",
+      "page_title": "kSenseTrackingDemo"
+    },
+    "eventn_data": {
+    "customer_group": "test_group"
+    }
 }
 ```
 
@@ -39,26 +39,26 @@ sendEvent(JsonObject eventContext, JsonObject properties)
 In the example above, _eventContext_ parameter has the value:
 ```json
 {
-"event_id": "dq4s1q6rrg",
-"user": {
-"anonymous_id": "afdklmflv"
-},
-"user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36",
-"utc_time": "2020-08-03T14:35:58.638Z",
-"local_tz_offset": 240,
-"referer": "",
-"url": "http://localhost:63342/tracker-demo/demo.html?_ijt=u5jsi606103iugi7mjphngrc7i",
-"page_title": "kSenseTrackingDemo"
+  "event_id": "dq4s1q6rrg",
+  "user": {
+  "anonymous_id": "afdklmflv"
+  },
+  "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36",
+  "utc_time": "2020-08-03T14:35:58.638Z",
+  "local_tz_offset": 240,
+  "referer": "",
+  "url": "http://localhost:63342/tracker-demo/demo.html?_ijt=u5jsi606103iugi7mjphngrc7i",
+  "page_title": "kSenseTrackingDemo"
 }
 ```
 
 And the second, _properties_:
 ```json
 {
-"event_type": "3rdparty", 
-"eventn_data": {
-"customer_group": "test_group"
-}
+  "event_type": "3rdparty", 
+  "eventn_data": {
+    "customer_group": "test_group"
+  }
 }
 ```
 
@@ -85,7 +85,9 @@ if (!addedToQueue) {
 
 Asynchronous clients do not guarantee that all the messages of the queue will be delivered. 
 If you stop the application, events at the queue that were not processed get lost. To avoid this problem, 
-you should use synchronous and implement your own persistence of the events. 
+you should use synchronous and implement your own persistence of the events.
+
+To check which events are still in queue, use 
 
 ## Synchronous clients
 These clients send event and return server response.
@@ -109,4 +111,4 @@ System.out.println("response body: " + eventNativeResponse.getBody());
 To see examples of how to use clients, please, check [Demo class](https://github.com/ksensehq/eventnative-java-sdk/blob/master/src/main/java/io/ksense/eventnative/demo/Demo.java).
 
 ## SDK logs
-We use log4j logs. If you want to see the log of every event sent by an async client, enable 'debug' mode.
+We use log4j logs. To get more information about events processing, especially for async clients, enable 'debug' mode.

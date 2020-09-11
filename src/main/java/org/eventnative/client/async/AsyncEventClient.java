@@ -2,8 +2,9 @@ package org.eventnative.client.async;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.google.gson.JsonObject;
-import org.eventnative.model.EventNativeResponse;
 import okhttp3.*;
+import org.eventnative.client.EventClientUtils;
+import org.eventnative.model.EventNativeResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,14 +29,14 @@ public abstract class AsyncEventClient implements AutoCloseable {
 
     public AsyncEventClient(String baseUrl, String eventApiUrl, String token, int queueCapacity) {
         this.client = new OkHttpClient();
-        this.postEventUrl = buildPostEventUrl(normalizeBaseURL(baseUrl), eventApiUrl, token);
+        this.postEventUrl = buildPostEventUrl(EventClientUtils.normalizeBaseUrl(baseUrl), eventApiUrl, token);
         this.eventsQueue  = new LinkedBlockingQueue<>(queueCapacity);
         runMessagesConsumer();
     }
 
     public AsyncEventClient(String baseUrl, String eventApiUrl, String token, OkHttpClient client, int queueCapacity) {
         this.client = client;
-        this.postEventUrl = buildPostEventUrl(normalizeBaseURL(baseUrl), eventApiUrl, token);
+        this.postEventUrl = buildPostEventUrl(EventClientUtils.normalizeBaseUrl(baseUrl), eventApiUrl, token);
         this.eventsQueue  = new LinkedBlockingQueue<>(queueCapacity);
         runMessagesConsumer();
     }
@@ -66,13 +67,6 @@ public abstract class AsyncEventClient implements AutoCloseable {
 
     public Collection<JsonObject> unprocessedEvents() {
         return new ArrayList<>(eventsQueue);
-    }
-
-    private String normalizeBaseURL(String url) {
-        if (url.endsWith("/")) {
-            return url.substring(0, url.length() - 1);
-        }
-        return url;
     }
 
     protected EventNativeResponse sendRequest(String postEventUrl, RequestBody body) throws IOException {

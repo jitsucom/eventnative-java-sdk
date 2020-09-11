@@ -4,9 +4,9 @@ import com.google.gson.*;
 import org.apache.log4j.BasicConfigurator;
 import org.eventnative.client.async.C2SAsyncClient;
 import org.eventnative.client.async.S2SAsyncEventClient;
-import org.eventnative.model.EventNativeResponse;
 import org.eventnative.client.sync.C2SSyncEventClient;
 import org.eventnative.client.sync.S2SSyncEventClient;
+import org.eventnative.model.EventNativeResponse;
 
 import java.io.IOException;
 import java.util.concurrent.ThreadLocalRandom;
@@ -61,7 +61,7 @@ public class Demo {
      * sends s2s events till queue is full and new events are not allowed anymore.
      * If queue is full, ends execution and closes client
      */
-    private static void demoAsyncS2S() throws InterruptedException {
+    private static void demoAsyncS2S() throws InterruptedException, IllegalAccessException {
         try (S2SAsyncEventClient eventsClient = new S2SAsyncEventClient(EVENTNATIVE_BASE_URL, S2S_TOKEN, 10)) {
             while (true) {
                 JsonObject event = JsonParser.parseString("{\"event_type\": \"s2s_async_test\"}").getAsJsonObject();
