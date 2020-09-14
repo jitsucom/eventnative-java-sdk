@@ -10,6 +10,8 @@ import org.eventnative.model.WebEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -55,6 +57,10 @@ public class EventNativeAsyncClient extends AbstractClient implements AutoClosea
 
     private boolean addEvent(JsonObject event) {
         return eventsQueue.offer(event);
+    }
+
+    public Collection<JsonObject> getUnprocessedEvents() {
+        return new ArrayList<>(eventsQueue);
     }
 
     private void runMessagesConsumer() {
