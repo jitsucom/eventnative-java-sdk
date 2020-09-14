@@ -4,10 +4,8 @@ This project contains the implementation of Java clients to send events to [Even
 We have two types of clients: synchronous and asynchronous events processing.
 
 Clients allow sending web events or any event. 
-
 Web event has a defined structure 
 (see [WebEvent](https://github.com/ksensehq/eventnative-java-sdk/blob/master/src/main/java/org/eventnative/model/WebEvent.java)).
-
 Other events supposed to be any valid JSON object.
 
 ## Asynchronous clients
@@ -30,14 +28,12 @@ try (EventNativeAsyncClient client = new EventNativeAsyncClient(EVENTNATIVE_BASE
 
 The asynchronous client does not guarantee that all the messages of the queue will be delivered. 
 If you stop the application, events at the queue that were not processed get lost. To avoid this problem, 
-you should use synchronous and implement your own persistence of the events.
+you should use a synchronous client and implement your own persistence of the events.
 
 To check which events are still in the queue, use org.eventnative.client.EventNativeAsyncClient.getUnprocessedEvents 
 
 ## Synchronous clients
-These clients send event and return server response.
-
-We have an implementation of one [sync client](https://github.com/ksensehq/eventnative-java-sdk/blob/master/src/main/java/org/eventnative/client/EventNativeSyncClient.java).
+These clients send an event and return server response. We have an implementation of one [sync client](https://github.com/ksensehq/eventnative-java-sdk/blob/master/src/main/java/org/eventnative/client/EventNativeSyncClient.java).
 
 Example of sync event sending:
 ```java
@@ -51,7 +47,7 @@ if (!eventNativeResponse.isSuccessful()) {
 }
 ```
 
-To see examples of how to use clients, please, check [Demo class](https://github.com/ksensehq/eventnative-java-sdk/blob/master/src/main/java/io/ksense/eventnative/demo/Demo.java).
+To see more examples of how to use clients, please, check [Demo class](https://github.com/ksensehq/eventnative-java-sdk/blob/master/src/main/java/io/ksense/eventnative/demo/Demo.java).
 
 ## SDK logs
 We use log4j logs. To get more information about events processing, especially for async clients, enable 'debug' mode.
