@@ -1,15 +1,16 @@
 package org.eventnative.demo;
 
-import com.google.gson.*;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.apache.log4j.BasicConfigurator;
-import org.eventnative.client.async.C2SAsyncClient;
-import org.eventnative.client.async.S2SAsyncEventClient;
-import org.eventnative.client.sync.C2SSyncEventClient;
-import org.eventnative.client.sync.S2SSyncEventClient;
+import org.eventnative.client.EventNativeAsyncClient;
+import org.eventnative.client.EventNativeSyncClient;
+import org.eventnative.model.EventContext;
 import org.eventnative.model.EventNativeResponse;
+import org.eventnative.model.UserProperties;
+import org.eventnative.model.WebEvent;
 
 import java.io.IOException;
-import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Fill the constants with your Eventnative URL and token values to test clients
@@ -17,78 +18,55 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Demo {
 
     public static final String EVENTNATIVE_BASE_URL = "<PUT_YOUR_EVENTNATIVE_URL>";
-    public static final String C2S_TOKEN = "<YOUR_CLIENT_TOKEN>";
     public static final String S2S_TOKEN = "<S2S_AUTH>";
 
     public static void main(String[] args) throws IOException, InterruptedException {
         // demo logs are written to console
         BasicConfigurator.configure();
         // uncomment the demo you want to run
-
-        demoS2S();
-//        demoC2S();
-//        demoAsyncS2S();
-//        demoAsyncC2S();
+        syncAnyEventDemo();
+//        syncWebEventDemo();
+//        asyncEventDemo();
     }
 
-    private static void demoS2S() throws IOException {
-        String s2sEvent = "{\"event_type\": \"test_event\" }";
-        JsonObject json = JsonParser.parseString(s2sEvent).getAsJsonObject();
-        final S2SSyncEventClient client = new S2SSyncEventClient(EVENTNATIVE_BASE_URL, S2S_TOKEN);
-        final EventNativeResponse eventNativeResponse = client.sendEvent(json);
-        System.out.println(eventNativeResponse);
-        System.out.println(eventNativeResponse.isSuccessful());
+    public static void syncAnyEventDemo() throws IOException {
+        final EventNativeSyncClient client = new EventNativeSyncClient(EVENTNATIVE_BASE_URL, S2S_TOKEN);
+        final JsonObject event = JsonParser.parseString("{\"event_type\": \"test_sync\"}").getAsJsonObject();
+        final EventNativeResponse eventNativeResponse = client.sendEvent(event);
+        System.out.printf("Is successful: [%s], status: [%s], body: [%s]%n",
+                eventNativeResponse.isSuccessful(), eventNativeResponse.getStatus(), eventNativeResponse.getBody());
     }
 
-    private static void demoC2S() throws IOException {
-        String event = "{\"event_type\": \"test_event\"}";
-        JsonObject json = JsonParser.parseString(event).getAsJsonObject();
-        final C2SSyncEventClient client = new C2SSyncEventClient(EVENTNATIVE_BASE_URL, C2S_TOKEN);
-
-        final JsonObject userJson = JsonParser.parseString("{\"anonymous_id\": \"randomValue\"}").getAsJsonObject();
-        final UserEvent userEvent = new UserEvent("231", userJson);
-
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .create();
-        final JsonObject jsonElement = gson.toJsonTree(userEvent).getAsJsonObject();
-        final EventNativeResponse eventNativeResponse = client.sendEvent(jsonElement, json);
-        System.out.println(eventNativeResponse);
-        System.out.println(eventNativeResponse.isSuccessful());
+    public static void syncWebEventDemo() throws IOException {
+        final EventNativeSyncClient client = new EventNativeSyncClient(EVENTNATIVE_BASE_URL, S2S_TOKEN);
+        final EventContext context = EventContext.builder()
+                .setEventId("test123")
+                .setField("custom_context_filed", "set")
+                .setLocalTzOffset(4)
+                .setUtcTime("2020-09-14 01:00:59.132")
+                .setPageTitle("test.io")
+                .setReferer("any-site")
+                .setUrl("https://test.io")
+                .setUserAgent("unknown")
+                .setUser(UserProperties.builder().setAnonymousId("21321").build())
+                .build();
+        WebEvent event = WebEvent.builder()
+                .setApiKey(S2S_TOKEN)
+                .setEventType("test_sync_web")
+                .setSrc("test")
+                .setProperty("test_custom_field", 2)
+                .setEventnCtx(context)
+                .build();
+        final EventNativeResponse eventNativeResponse = client.sendWebEvent(event);
+        System.out.printf("Is successful: [%s], status: [%s], body: [%s]%n",
+                eventNativeResponse.isSuccessful(), eventNativeResponse.getStatus(), eventNativeResponse.getBody());
     }
 
-    /**
-     * sends s2s events till queue is full and new events are not allowed anymore.
-     * If queue is full, ends execution and closes client
-     */
-    private static void demoAsyncS2S() throws InterruptedException, IllegalAccessException {
-        try (S2SAsyncEventClient eventsClient = new S2SAsyncEventClient(EVENTNATIVE_BASE_URL, S2S_TOKEN, 10)) {
-            while (true) {
-                JsonObject event = JsonParser.parseString("{\"event_type\": \"s2s_async_test\"}").getAsJsonObject();
-                final boolean sent = eventsClient.sendEvent(event);
-                if (!sent) {
-                    break;
-                }
-                Thread.sleep(100);
-            }
-        }
-    }
-
-    /**
-     * sends c2s events till queue is full and new events are not allowed anymore.
-     * If queue is full, ends execution and closes client
-     */
-    private static void demoAsyncC2S() throws InterruptedException {
-        try (C2SAsyncClient eventsClient = new C2SAsyncClient(EVENTNATIVE_BASE_URL, C2S_TOKEN, 10)) {
-            while (true) {
-                JsonObject eventProperties = JsonParser.parseString("{\"event_type\": \"c2c_async_test\"}").getAsJsonObject();
-                JsonObject eventContext = JsonParser.parseString("{\"event_id\": \"" + ThreadLocalRandom.current().nextLong() + "\"}").getAsJsonObject();
-                final boolean sent = eventsClient.sendEvent(eventContext, eventProperties);
-                if (!sent) {
-                    break;
-                }
-                Thread.sleep(100);
-            }
+    public static void asyncEventDemo() {
+        try (EventNativeAsyncClient client = new EventNativeAsyncClient(EVENTNATIVE_BASE_URL, S2S_TOKEN, 10)) {
+            final JsonObject event = JsonParser.parseString("{\"event_type\": \"test_sync\"}").getAsJsonObject();
+            boolean added = client.sendEvent(event);
+            System.out.println("Added event to queue: " + added);
         }
     }
 }
