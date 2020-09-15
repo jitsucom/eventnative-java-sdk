@@ -20,7 +20,7 @@ targetCompatibility = JavaVersion.VERSION_1_8
 
 archivesBaseName = 'eventnative'
 group 'org.eventnative'
-version '$version'
+version "$version"
 
 modifyPom {
     project {
@@ -70,11 +70,11 @@ repositories {
 }
 
 dependencies {
-    compile group: 'com.google.code.gson', name: 'gson', version: '2.8.6'
-    compile group: 'com.squareup.okhttp3', name: 'okhttp', version: '4.8.1'
-    compile group: 'com.google.guava', name: 'guava', version: '29.0-jre'
-    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.30'
-    compile group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.30'
+    compile "com.google.code.gson:gson:$gsonVersion"
+    compile "com.squareup.okhttp3:okhttp:$httpClientVersion"
+    compile "com.google.guava:guava:$guavaVersion"
+    compile "org.slf4j:slf4j-api:$loggerVersion"
+    compile "org.slf4j:slf4j-log4j12:$loggerVersion"
 
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testCompile "junit:junit:$junitVersion"
 }
